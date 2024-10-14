@@ -6,25 +6,66 @@
 #define PEOPLE_WIDTH 12
 #define CHAT_HEIGHT 20
 #define CHAT_WIDTH 60
+#define FULL_HEIGHT 20
+#define FULL_WIDTH 70
 
 int main() {
-    WINDOW *people_menu, *chat_window;
+    
+
+
+
+    WINDOW *people_menu, *chat_window, *auth_window;
+    int auth_window_ind = 0;
+    bool is_logged = false;
     std::vector<std::string> menu_elements {};
     menu_elements.push_back("SEARCH");
     menu_elements.push_back("SETTINGS");
     int ch, cur_peop_ind = 0;
     initscr();
-    
-    // attroff(COLOR_PAIR(1));
+    curs_set(0);
+    auth_window = newwin(FULL_HEIGHT, FULL_WIDTH, 0, 0);
+    box(auth_window, 0, 0);
+    wattron(auth_window, A_STANDOUT);
+    mvwprintw(auth_window, FULL_HEIGHT/2-1, FULL_WIDTH/2-5, "%s", "Log in");
+    wattroff(auth_window, A_STANDOUT);
+    mvwprintw(auth_window, FULL_HEIGHT/2, FULL_WIDTH/2-5, "%s", "Registrate");
+    wrefresh(auth_window);
+    noecho();
+    keypad(auth_window, TRUE);
+    while(!is_logged){ 
+        
+        ch = wgetch(auth_window);
+        if (auth_window_ind==0)  mvwprintw(auth_window, FULL_HEIGHT/2-1, FULL_WIDTH/2-5, "%s", "Log in");
+        else mvwprintw(auth_window, FULL_HEIGHT/2, FULL_WIDTH/2-5, "%s", "Registrate");
+        switch( ch ) {
+            case KEY_UP:
+                auth_window_ind--;
+                auth_window_ind = ( auth_window_ind<0 ) ? 1 : 0;
+                break;
+            case KEY_DOWN:
+                auth_window_ind++;
+                auth_window_ind = ( auth_window_ind > 1 ) ? 0 : 1;
+                break;
+            case '\n': // KEY_ENTER
+                is_logged = true;
+                break;
+        }
+        wattron( auth_window, A_STANDOUT );
+        if (auth_window_ind==0)  mvwprintw(auth_window, FULL_HEIGHT/2-1, FULL_WIDTH/2-5, "%s", "Log in");
+        else mvwprintw(auth_window, FULL_HEIGHT/2, FULL_WIDTH/2-5, "%s", "Registrate");
+        wattroff( auth_window, A_STANDOUT );
+    }
+    clear();
+
+
+
     people_menu = newwin( PEOPLE_HEIGHT, PEOPLE_WIDTH, 0, 0 );
     chat_window = newwin(CHAT_HEIGHT, CHAT_WIDTH, 0, 12);
 
     box(people_menu, 0, 0); // borders
     box(chat_window, 0, 0);
-    attron(COLOR_PAIR(0));
     mvwprintw(people_menu, 0, 2, "%s", "Contacts");
     mvwprintw(chat_window, 0, 16, "%s", "Chat");
-    attroff(COLOR_PAIR(0));
     for( cur_peop_ind=0; cur_peop_ind<menu_elements.size()-2; cur_peop_ind++ ) {
         if( cur_peop_ind == 0 ) 
             wattron( people_menu, A_STANDOUT ); 
@@ -42,7 +83,6 @@ int main() {
     cur_peop_ind = 0;
     noecho();
     keypad( people_menu, TRUE );
-    curs_set( 0 );
     while(( ch = wgetch(people_menu)) != 'q'){ 
 
         if (menu_elements[cur_peop_ind] == "SEARCH") mvwprintw( people_menu, PEOPLE_HEIGHT-3, 2, "%-7s", menu_elements[cur_peop_ind].c_str() ); 
@@ -66,6 +106,7 @@ int main() {
     }
     delwin( people_menu );
     delwin( chat_window );
+    delwin(auth_window);
     endwin();
     return 0;
 }
