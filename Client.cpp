@@ -11,9 +11,6 @@
 
 int main() {
     
-
-
-
     WINDOW *people_menu, *chat_window, *auth_window;
     int auth_window_ind = 0;
     bool is_logged = false;
