@@ -16,9 +16,9 @@ Server::Server()
         (struct sockaddr*)&serverAddress,
         sizeof(serverAddress)
     );
-    if (listen(m_serverSocket, 10000) < 0 && m_logger_inited)
+    if (listen(m_serverSocket, 10000) < 0)
     {
-
+        
     }
 
     m_acceptor_working = false;
@@ -65,6 +65,7 @@ void Server::m_acceptor()
         {
             std::lock_guard _lock(m_mut_sessions);
             m_sessions.push( std::move(cur_session) );
+    
         }
         // std::this_thread::sleep_for(std::chrono::milliseconds(2));
     }
