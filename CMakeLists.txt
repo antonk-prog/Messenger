@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.25)
+project(Messenger)
+
+set(CMAKE_CXX_STANDARD 20)
+# set(CPPLIBS_DIR "/home/vova/projects/cppLibs")
+# set(NLOHMANN_HEADERS "${CPPLIBS_DIR}")
+
+add_subdirectory(Client)
+add_subdirectory(Server)
+set(BIN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/bin")
+install(TARGETS Client RUNTIME DESTINATION ${BIN_DIR}) 
+install(TARGETS Server RUNTIME DESTINATION ${BIN_DIR}) 

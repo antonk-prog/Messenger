@@ -10,13 +10,18 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
-
+#include "Session.hpp"
 #define SERVER_PORT 8484
 #define THREAD_HANDLE_COUNT 4
 
 // Server -> Session -> Endpoint
 
 class EndPoint;
+
+struct ServerData{
+    // t_pJsonConverter converter;
+    std::vector<EndPoint> endPoints;
+};
 
 class Session;
 using t_pSession = std::shared_ptr<Session>;

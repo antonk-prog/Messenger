@@ -90,4 +90,5 @@ bool Session::m_request_parse()
     // if (res != httpparser::HttpRequestParser::ParsingCompleted)
     //     return false;
     // return true;
+    return true;
 }

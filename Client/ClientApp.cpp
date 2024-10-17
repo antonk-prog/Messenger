@@ -1,4 +1,4 @@
-#include<ncurses.h>
+#include <ncurses.h>
 #include <vector>
 #include <string>
 
@@ -14,7 +14,7 @@ int main() {
     WINDOW *people_menu, *chat_window, *auth_window;
     int auth_window_ind = 0;
     bool is_logged = false;
-    std::vector<std::string> menu_elements {};
+    std::vector<std::string> menu_elements {"Alexandr", "Marina", "Uliana"};
     menu_elements.push_back("SEARCH");
     menu_elements.push_back("SETTINGS");
     int ch, cur_peop_ind = 0;
