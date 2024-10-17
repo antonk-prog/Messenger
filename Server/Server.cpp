@@ -95,7 +95,7 @@ void Server::m_session_handler()
             if (cur_session.get() == nullptr)
                 break;
             // TODO after fix session
-            cur_session->handle();
+            cur_session->handle(m_data);
             cur_session.reset();
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));

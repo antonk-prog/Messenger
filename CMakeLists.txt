@@ -2,8 +2,12 @@ cmake_minimum_required(VERSION 3.25)
 project(Messenger)
 
 set(CMAKE_CXX_STANDARD 20)
-# set(CPPLIBS_DIR "/home/vova/projects/cppLibs")
-# set(NLOHMANN_HEADERS "${CPPLIBS_DIR}")
+set(NLOHMANN_HEADERS "/home/anton/projects/cppLibs/json/nlohmann")
+set(HTTP_PARSER_HEADERS "/home/anton/projects/cppLibs/httpparser-master/src")
+include_directories(
+    ${NLOHMANN_HEADERS}
+    ${HTTP_PARSER_HEADERS}
+)
 
 add_subdirectory(Client)
 add_subdirectory(Server)

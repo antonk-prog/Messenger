@@ -14,18 +14,19 @@
 #define SERVER_PORT 8484
 #define THREAD_HANDLE_COUNT 4
 
-// Server -> Session -> Endpoint
-
 class EndPoint;
 
-struct ServerData{
-    // t_pJsonConverter converter;
+struct ServerData
+{
+    t_pJsonConverter converter;
     std::vector<EndPoint> endPoints;
 };
-
+// Server -> Session -> Endpoint
+using t_pServerData = std::shared_ptr<ServerData>;
+struct EndPointArgs;
+using t_pEndPointArgs = std::shared_ptr<EndPointArgs>;
 class Session;
 using t_pSession = std::shared_ptr<Session>;
-
 class Server
 {
 public:
@@ -44,7 +45,7 @@ private:
     std::thread m_threads[1 + THREAD_HANDLE_COUNT];
     std::mutex m_mut_sessions;
     std::queue<t_pSession> m_sessions;
-
+    t_pServerData m_data;
     void m_acceptor();
     void m_session_handler();
     void m_on_accept(t_pSession session);
