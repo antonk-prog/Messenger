@@ -52,9 +52,11 @@ void api_login(t_pEndPointArgs argv)
 
 	if (argv->request->method != "POST")
 		return;
+	
 	argv->response->append(OK_HTTP_STRING);
 	std::string data(argv->request->content.begin(), argv->request->content.end());
 	data = "?" + data;
+	// std::cout << "data: " << data << std::endl;
 	_uri.Parse(data);
 	for (auto& item: _uri.params)
 	{
@@ -66,11 +68,12 @@ void api_login(t_pEndPointArgs argv)
 
 	if (username.empty() || password.empty())
 		return ;
-
 	// TODO переделать на строки
+	
 	hash = argv->serverData->authCollector->login(
-		(char *)username.c_str(), (char *)password.c_str()
+		(char*)username.c_str(), (char*)password.c_str()
 	);
+	
 	if (!hash.empty())
 	{
 		argv->response->append("Authentication: ");
@@ -80,6 +83,8 @@ void api_login(t_pEndPointArgs argv)
 
 	argv->response->append("\r\n");
 	argv->response->append("chlen");
+
+
 }
 
 // static inline t_InventoryId inventory_id_by_auth(t_pEndPointArgs argv)
@@ -127,5 +132,5 @@ void add_all_endpoints(Server& server)
 	// server.add_end_point(API_VERSION_V1"/get_my_inventory", EP_api_get_my_inventory);
 	// server.add_end_point(API_VERSION_V1"/get_inventory", EP_api_get_inventory);
 	
-	// server.add_end_point(API_VERSION_V1"/login", api_login);
+	server.add_end_point(API_VERSION_V1"/login", api_login);
 }

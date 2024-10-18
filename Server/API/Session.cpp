@@ -3,7 +3,6 @@
 
 Session::Session(int serverSocket)
 {
-    std::cout << "here" << std::endl;
     m_fd = accept(serverSocket, nullptr, nullptr);
     m_bad_session = false;
     if (m_fd < 0)
@@ -64,7 +63,6 @@ void Session::m_create_response(t_pServerData data)
     {
         if (endPoint == m_req->uri)
         {
-            std::cout << m_req->uri << std::endl;
             *response = std::string();
             endPoint(argsEndPoint);
             break;

@@ -4,6 +4,7 @@ project(Messenger)
 set(CMAKE_CXX_STANDARD 20)
 set(NLOHMANN_HEADERS "/home/anton/projects/cppLibs/json/nlohmann")
 set(HTTP_PARSER_HEADERS "/home/anton/projects/cppLibs/httpparser-master/src")
+
 include_directories(
     ${NLOHMANN_HEADERS}
     ${HTTP_PARSER_HEADERS}

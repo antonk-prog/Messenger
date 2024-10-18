@@ -8,13 +8,23 @@
 #define CHAT_WIDTH 60
 #define FULL_HEIGHT 20
 #define FULL_WIDTH 70
-
+void rectangle(int y1, int x1, int y2, int x2)
+{
+    mvhline(y1, x1, 0, x2-x1);
+    mvhline(y2, x1, 0, x2-x1);
+    mvvline(y1, x1, 0, y2-y1);
+    mvvline(y1, x2, 0, y2-y1);
+    mvaddch(y1, x1, ACS_ULCORNER);
+    mvaddch(y2, x1, ACS_LLCORNER);
+    mvaddch(y1, x2, ACS_URCORNER);
+    mvaddch(y2, x2, ACS_LRCORNER);
+}
 int main() {
     
-    WINDOW *people_menu, *chat_window, *auth_window;
+    WINDOW *people_menu, *chat_window, *auth_window, *log_window, *reg_window;
     int auth_window_ind = 0;
     bool is_logged = false;
-    std::vector<std::string> menu_elements {"Alexandr", "Marina", "Uliana"};
+    std::vector<std::string> menu_elements {"antoska", "glebok", "uliana"};
     menu_elements.push_back("SEARCH");
     menu_elements.push_back("SETTINGS");
     int ch, cur_peop_ind = 0;
@@ -44,7 +54,136 @@ int main() {
                 auth_window_ind = ( auth_window_ind > 1 ) ? 0 : 1;
                 break;
             case '\n': // KEY_ENTER
-                is_logged = true;
+                curs_set(2);
+                std::string username;
+                std::string password;
+                if (auth_window_ind == 0){ // Log in
+                    log_window = newwin(FULL_HEIGHT, FULL_WIDTH, 0, 0);
+                    bool entered_username = false;
+                    bool entered_password = false;
+                    box(log_window, 0, 0);
+                    // move(FULL_HEIGHT / 4, FULL_WIDTH/2-1)
+                    mvwprintw(log_window, FULL_HEIGHT / 4, FULL_WIDTH/2-15, "%s", "Enter username:");
+                    mvwprintw(log_window, (FULL_HEIGHT / 4) * 2, FULL_WIDTH/2-15, "%s", "Enter password:");
+                    wrefresh(log_window);
+                    keypad(log_window, TRUE);
+                    wmove(log_window, FULL_HEIGHT / 4, FULL_WIDTH/2+2);
+
+                    int start_cursor_x = getcurx(log_window);
+
+                    while (!entered_username){
+                        ch = wgetch(log_window);
+                        if (ch == '\n'){
+                            entered_username = true;
+                        }
+                        
+                        if (ch == KEY_BACKSPACE){
+                            if (start_cursor_x < getcurx(log_window)){
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                                waddch(log_window, ' ');
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                            }
+                            
+                        }else{
+                            if (getcurx(log_window) < FULL_WIDTH-5){
+                                waddch(log_window,  ch | A_BOLD | A_UNDERLINE);
+                                username += ch;
+                            }   
+                        }
+                        
+                    }
+                    wmove(log_window, (FULL_HEIGHT / 4)*2, FULL_WIDTH/2+2);
+                    start_cursor_x = getcurx(log_window);
+                    while (!entered_password){
+                        ch = wgetch(log_window);
+                        if (ch == '\n'){
+                            entered_password = true;
+                        }
+                        
+                        if (ch == KEY_BACKSPACE){
+                            if (start_cursor_x < getcurx(log_window)){
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                                waddch(log_window, ' ');
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                            }
+                            
+                        }else{
+                            if (getcurx(log_window) < FULL_WIDTH-5){
+                                waddch(log_window,  ch | A_BOLD | A_UNDERLINE);
+                                password += ch;
+                            }   
+                        }
+                    }
+
+                    if (true) // send hhtp post request and check if user exists. if true:
+                    {
+                        is_logged = true;
+                        break;
+                    }
+                } else {  // Register
+                    log_window = newwin(FULL_HEIGHT, FULL_WIDTH, 0, 0);
+                    bool entered_username = false;
+                    bool entered_password = false;
+                    box(log_window, 0, 0);
+                    // move(FULL_HEIGHT / 4, FULL_WIDTH/2-1)
+                    mvwprintw(log_window, FULL_HEIGHT / 4, FULL_WIDTH/2-15, "%s", "Enter username:");
+                    mvwprintw(log_window, (FULL_HEIGHT / 4) * 2, FULL_WIDTH/2-15, "%s", "Enter password:");
+                    wrefresh(log_window);
+                    keypad(log_window, TRUE);
+                    wmove(log_window, FULL_HEIGHT / 4, FULL_WIDTH/2+2);
+
+                    int start_cursor_x = getcurx(log_window);
+
+                    while (!entered_username){
+                        ch = wgetch(log_window);
+                        if (ch == '\n'){
+                            entered_username = true;
+                        }
+                        
+                        if (ch == KEY_BACKSPACE){
+                            if (start_cursor_x < getcurx(log_window)){
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                                waddch(log_window, ' ');
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                            }
+                            
+                        }else{
+                            if (getcurx(log_window) < FULL_WIDTH-5){
+                                waddch(log_window,  ch | A_BOLD | A_UNDERLINE);
+                                username += ch;
+                            }   
+                        }
+                        
+                    }
+                    wmove(log_window, (FULL_HEIGHT / 4)*2, FULL_WIDTH/2+2);
+                    start_cursor_x = getcurx(log_window);
+                    while (!entered_password){
+                        ch = wgetch(log_window);
+                        if (ch == '\n'){
+                            entered_password = true;
+                        }
+                        
+                        if (ch == KEY_BACKSPACE){
+                            if (start_cursor_x < getcurx(log_window)){
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                                waddch(log_window, ' ');
+                                wmove(log_window, getcury(log_window), getcurx(log_window)-1);
+                            }
+                            
+                        }else{
+                            if (getcurx(log_window) < FULL_WIDTH-5){
+                                waddch(log_window,  ch | A_BOLD | A_UNDERLINE);
+                                password += ch;
+                            }   
+                        }
+                    }
+
+                    if (true) // send hhtp post request and check if succeded to create user account :
+                    {
+                        is_logged = true;
+                        break;
+                    }
+                }
                 break;
         }
         wattron( auth_window, A_STANDOUT );
@@ -58,7 +197,7 @@ int main() {
 
     people_menu = newwin( PEOPLE_HEIGHT, PEOPLE_WIDTH, 0, 0 );
     chat_window = newwin(CHAT_HEIGHT, CHAT_WIDTH, 0, 12);
-
+    curs_set(0);
     box(people_menu, 0, 0); // borders
     box(chat_window, 0, 0);
     mvwprintw(people_menu, 0, 2, "%s", "Contacts");
@@ -78,7 +217,7 @@ int main() {
     wrefresh( people_menu );
     wrefresh( chat_window );
     cur_peop_ind = 0;
-    noecho();
+    
     keypad( people_menu, TRUE );
     while(( ch = wgetch(people_menu)) != 'q'){ 
 

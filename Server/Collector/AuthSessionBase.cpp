@@ -16,10 +16,10 @@ AuthSessionBase::AuthSessionBase(char* name, char* pass, u_long inv)
     hash.append(std::to_string(t1));
 
     MD5((unsigned char *)hash.c_str(), hash.size(), _temp);
-    for (int i = 0; i < MD5_DIGEST_LENGTH; i++)             //?????
+    for (int i = 0; i < MD5_DIGEST_LENGTH; i++)             
     {
-        c_hash[i * 2] = ALFAVITE[_temp[i] % 62];             //?????
-        c_hash[i * 2 + 1] = ALFAVITE[_temp[i] / 62];             //?????
+        c_hash[i * 2] = ALFAVITE[_temp[i] % 62];             
+        c_hash[i * 2 + 1] = ALFAVITE[_temp[i] / 62];             
     }
-    m_hash = std::string(c_hash, MD5_DIGEST_LENGTH * 2);             //?????
+    m_hash = std::string(c_hash, MD5_DIGEST_LENGTH * 2);
 }

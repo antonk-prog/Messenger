@@ -1,5 +1,4 @@
 #include <AuthCollectorBase.hpp>
-
 bool AuthCollectorBase::checkUserExists(char* username, char* pass)
 {
 	/*
