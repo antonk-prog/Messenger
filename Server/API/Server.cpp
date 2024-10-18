@@ -1,13 +1,17 @@
-#include "Server.hpp"
+#include <Server.hpp>
 
-Server::Server()
-{
+Server::Server(t_pServerData data)
+{   
     const int opt = 1;
+    
+    m_data = data;
+    if (!m_data->converter)
+        m_data->converter = std::make_shared<JsonConverter>();
 
     m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     setsockopt(m_serverSocket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
     setsockopt(m_serverSocket, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
-    sockaddr_in serverAddress;
+    sockaddr_in serverAddress;  
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(SERVER_PORT);
     serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -102,7 +106,12 @@ void Server::m_session_handler()
     }   
 }
 
+void Server::add_end_point(std::string uri, void (*f)(t_pEndPointArgs))
+{
+    EndPoint endPoint(uri, f);
 
+    m_data->endPoints.push_back(endPoint);
+}
 
 void Server::join()
 {

@@ -3,6 +3,7 @@
 
 Session::Session(int serverSocket)
 {
+    std::cout << "here" << std::endl;
     m_fd = accept(serverSocket, nullptr, nullptr);
     m_bad_session = false;
     if (m_fd < 0)
@@ -47,9 +48,7 @@ void Session::m_create_response(t_pServerData data)
 {
     std::stringstream ss;
     std::string context;
-    t_pEndPointArgs argsEndPoint;
-    
-    argsEndPoint = std::make_shared<EndPointArgs>();
+    t_pEndPointArgs argsEndPoint = std::make_shared<EndPointArgs>();
     argsEndPoint->serverData = data;
     argsEndPoint->request = m_req;
     response = argsEndPoint->response;
@@ -65,6 +64,7 @@ void Session::m_create_response(t_pServerData data)
     {
         if (endPoint == m_req->uri)
         {
+            std::cout << m_req->uri << std::endl;
             *response = std::string();
             endPoint(argsEndPoint);
             break;
@@ -74,6 +74,7 @@ void Session::m_create_response(t_pServerData data)
 
 void Session::m_send()
 {
+    std::cout << response->c_str() << std::endl;
     send(m_fd, response->c_str(), response->size(), 0);
 }
 

@@ -2,11 +2,16 @@ cmake_minimum_required(VERSION 3.25)
 
 set(CUR_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-file(GLOB Server_src
-    "${CUR_DIR}/*.cpp"
-)
-add_executable(Server ${Server_src})
-include_directories(${CUR_DIR})
 
-message("Server config done")
+add_subdirectory(API)
+add_subdirectory(Collector)
+
+add_executable(Server ServerApp.cpp)
+target_include_directories(ServerAPI PUBLIC Collector)
+target_include_directories(Server PUBLIC API)
+
+
+target_link_libraries(Server ServerAPI)
+target_link_libraries(Server Collector)
+
 

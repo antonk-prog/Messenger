@@ -10,7 +10,8 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include "Session.hpp"
+#include <Session.hpp>
+#include <AuthCollectorBase.hpp>
 #define SERVER_PORT 8484
 #define THREAD_HANDLE_COUNT 4
 
@@ -18,6 +19,7 @@ class EndPoint;
 
 struct ServerData
 {
+    t_pAuthCollectorBase authCollector;
     t_pJsonConverter converter;
     std::vector<EndPoint> endPoints;
 };
@@ -30,13 +32,13 @@ using t_pSession = std::shared_ptr<Session>;
 class Server
 {
 public:
-    Server();
+    Server(t_pServerData);
     ~Server();
 
     void join();
     void start_session_handler();
     void start_acceptor();
-
+    void add_end_point(std::string uri, void (*f)(t_pEndPointArgs));
 private:
     bool m_acceptor_working;
     bool m_session_handle;

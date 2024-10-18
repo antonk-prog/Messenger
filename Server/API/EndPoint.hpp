@@ -7,7 +7,6 @@
 #include <iostream>
 #include <httpparser/request.h>
 #include <httpparser/httprequestparser.h>
-#define OK_HTTP_STRING "HTTP/1.0 200 OK\r\n"
 using t_pRequest = std::shared_ptr<httpparser::Request>;
 using t_pResponse = std::shared_ptr<std::string>;
 
