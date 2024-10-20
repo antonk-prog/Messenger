@@ -56,6 +56,7 @@ void api_login(t_pEndPointArgs argv)
 	argv->response->append(OK_HTTP_STRING);
 	std::string data(argv->request->content.begin(), argv->request->content.end());
 	data = "?" + data;
+	std::cout <<  "data: " << data << std::endl;
 	// std::cout << "data: " << data << std::endl;
 	_uri.Parse(data);
 	for (auto& item: _uri.params)
@@ -81,8 +82,57 @@ void api_login(t_pEndPointArgs argv)
 		argv->response->append("\r\n");
 	}
 
+	if (!hash.empty()){
+		argv->response->append("\r\n");
+		argv->response->append("OK");
+
+	} else {
+		argv->response->append("\r\n");
+		argv->response->append("FAIL");
+
+	}
+	
+
+}
+
+void api_registrate(t_pEndPointArgs argv)
+{
+	/*
+	TODO
+	пределать авторизацию на OAuth2.0
+	*/
+	std::string username, password, hash;
+	URI _uri;
+
+	if (argv->request->method != "POST")
+		return;
+	
+	argv->response->append(OK_HTTP_STRING);
+	std::string data(argv->request->content.begin(), argv->request->content.end());
+	data = "?" + data;
+	std::cout <<  "data: " << data << std::endl;
+	// std::cout << "data: " << data << std::endl;
+	_uri.Parse(data);
+	for (auto& item: _uri.params)
+	{
+		if (item.first == "username")
+			username = item.second;
+		if (item.first == "password")
+			password = item.second;
+	}
+
+	if (username.empty() || password.empty())
+		return ;
+	// TODO переделать на строки
+	
+	bool result = argv->serverData->authCollector->registrate((char*)username.c_str(), (char*)password.c_str());
+	if (result){
+		argv->response->append("Registration: ");
+		argv->response->append(std::to_string(result));
+		argv->response->append("\r\n");
+	}
 	argv->response->append("\r\n");
-	argv->response->append("chlen");
+	argv->response->append("OK");
 
 
 }
@@ -133,4 +183,5 @@ void add_all_endpoints(Server& server)
 	// server.add_end_point(API_VERSION_V1"/get_inventory", EP_api_get_inventory);
 	
 	server.add_end_point(API_VERSION_V1"/login", api_login);
+	server.add_end_point(API_VERSION_V1"/registrate", api_registrate);
 }

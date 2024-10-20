@@ -1,27 +1,40 @@
 #include <ncurses.h>
 #include <vector>
 #include <string>
-
+#include <string>
+#include <iostream>
+#include <HTTPRequest.hpp>
 #define PEOPLE_HEIGHT 20
 #define PEOPLE_WIDTH 12
 #define CHAT_HEIGHT 20
 #define CHAT_WIDTH 60
 #define FULL_HEIGHT 20
 #define FULL_WIDTH 70
-void rectangle(int y1, int x1, int y2, int x2)
-{
-    mvhline(y1, x1, 0, x2-x1);
-    mvhline(y2, x1, 0, x2-x1);
-    mvvline(y1, x1, 0, y2-y1);
-    mvvline(y1, x2, 0, y2-y1);
-    mvaddch(y1, x1, ACS_ULCORNER);
-    mvaddch(y2, x1, ACS_LLCORNER);
-    mvaddch(y1, x2, ACS_URCORNER);
-    mvaddch(y2, x2, ACS_LRCORNER);
-}
+
 int main() {
+
+    // try
+    // {
+    //     http::Request request{"http://localhost:8484/api/v1/login"};
+    //     const std::string body = "username=anton&password=123";
+    //     const auto response = request.send("POST", body, {
+    //         {"Content-Type", "application/x-www-form-urlencoded"}
+    //     });
+    //     std::cout << "response.status: " << std::endl;
+    //     std::cout << response.status.code << " " << response.status.reason << std::endl;
+    //     std::cout << "response.headerFields: " << std::endl;
+    //     for (int i = 0; i < response.headerFields.size(); i++){
+    //         std::cout << response.headerFields[i].first << " " << response.headerFields[i].second << std::endl;
+    //     }
+    //     // std::cout << std::string{response.headerFields.begin(), response.headerFields.end()} << '\n';
+    //     std::cout << std::string{response.body.begin(), response.body.end()} << '\n'; // print the result
+    // }
+    // catch (const std::exception& e)
+    // {
+    //     std::cerr << "Request failed, error: " << e.what() << '\n';
+    // }   
     
-    WINDOW *people_menu, *chat_window, *auth_window, *log_window, *reg_window;
+    WINDOW *people_menu,  *chat_window, *auth_window, *log_window, *reg_window;
     int auth_window_ind = 0;
     bool is_logged = false;
     std::vector<std::string> menu_elements {"antoska", "glebok", "uliana"};
@@ -114,7 +127,41 @@ int main() {
                             }   
                         }
                     }
+                    http::Response response;
+                    try
+                    {
+                        http::Request request{"http://localhost:8484/api/v1/login"};
+                        const std::string body = "username=" + username + "&password=" + password;
+                        response = request.send("POST", body, {
+                            {"Content-Type", "application/x-www-form-urlencoded"}
+                        });
+                        // std::cout << "response.status: " << std::endl;
+                        // std::cout << response.status.code << " " << response.status.reason << std::endl;
+                        // std::cout << "response.headerFields: " << std::endl;
+                        // for (int i = 0; i < response.headerFields.size(); i++){
+                            // std::cout << response.headerFields[i].first << " " << response.headerFields[i].second << std::endl;
+                        // }
+                    }
 
+                    catch (const std::exception& e)
+                    {
+                        std::cerr << "Request failed, error: " << e.what() << '\n';
+                    }
+                    if (std::string{response.body.begin(), response.body.end()} == "OK") // send hhtp post request and check if succeded to create user account :
+                    {
+
+                        curs_set(0);
+                        clear();
+                        refresh();
+                        box(auth_window, 0, 0);
+
+                        wattroff(auth_window, A_STANDOUT);
+                        mvwprintw(auth_window, FULL_HEIGHT/2-1, FULL_WIDTH/2-5, "%s", "Log in");
+                        wattron(auth_window, A_STANDOUT);
+                        mvwprintw(auth_window, FULL_HEIGHT/2, FULL_WIDTH/2-5, "%s", "Registrate");
+                        keypad(auth_window, TRUE);
+                        break;
+                    }
                     if (true) // send hhtp post request and check if user exists. if true:
                     {
                         is_logged = true;
@@ -177,10 +224,41 @@ int main() {
                             }   
                         }
                     }
-
-                    if (true) // send hhtp post request and check if succeded to create user account :
+                    http::Response response;
+                    try
                     {
-                        is_logged = true;
+                        http::Request request{"http://localhost:8484/api/v1/registrate"};
+                        const std::string body = "username=" + username + "&password=" + password;
+                        response = request.send("POST", body, {
+                            {"Content-Type", "application/x-www-form-urlencoded"}
+                        });
+                        // std::cout << "response.status: " << std::endl;
+                        // std::cout << response.status.code << " " << response.status.reason << std::endl;
+                        // std::cout << "response.headerFields: " << std::endl;
+                        // for (int i = 0; i < response.headerFields.size(); i++){
+                            // std::cout << response.headerFields[i].first << " " << response.headerFields[i].second << std::endl;
+                        // }
+                    }
+
+                    catch (const std::exception& e)
+                    {
+                        std::cerr << "Request failed, error: " << e.what() << '\n';
+                    }
+                    if (std::string{response.body.begin(), response.body.end()} == "OK") // send hhtp post request and check if succeded to create user account :
+                    {
+                        // show window that registration succeded
+
+                        // delwin(log_window);
+                        curs_set(0);
+                        clear();
+                        refresh();
+                        box(auth_window, 0, 0);
+
+                        wattroff(auth_window, A_STANDOUT);
+                        mvwprintw(auth_window, FULL_HEIGHT/2-1, FULL_WIDTH/2-5, "%s", "Log in");
+                        wattron(auth_window, A_STANDOUT);
+                        mvwprintw(auth_window, FULL_HEIGHT/2, FULL_WIDTH/2-5, "%s", "Registrate");
+                        keypad(auth_window, TRUE);
                         break;
                     }
                 }

@@ -7,8 +7,8 @@ void add_all_endpoints(Server & server);
 
 int main() {
     t_pServerData serverData = std::make_shared<ServerData>();
-    serverData->authCollector = std::make_shared<AuthCollectorBase>();
-    
+    t_pAccountsCollector accounts_collector = std::make_shared<DataBaseAccounts>();
+    serverData->authCollector = std::make_shared<AuthCollectorBase>(accounts_collector);
 
     Server server(serverData);
 

@@ -4,16 +4,17 @@
 #include <map>
 #include <memory>
 #include <AuthSessionBase.hpp>
-
+#include <TempDataBase.hpp>
 using t_AuthSessionCollection = std::map<std::string, AuthSessionBase>;
 
 class AuthCollectorBase
 {
 public:
-    AuthCollectorBase() = default;
+    AuthCollectorBase(t_pAccountsCollector accounts_collector);
     ~AuthCollectorBase() = default;
 
-    virtual std::string login(char* log, char* pass); // AuthSessionBase пытается создать объект, если получается добавляет его в активные сессии
+    virtual std::string login(char* username, char* pass); // AuthSessionBase пытается создать объект, если получается добавляет его в активные сессии
+    virtual bool registrate(char* username, char* pass);
     unsigned long getIdByHash(std::string& hash);
 
 private:
@@ -22,6 +23,7 @@ private:
     t_AuthSessionCollection m_ses;
     unsigned long getIdByUsername(char*);
     bool checkUserExists(char* usr, char* pass);
+    t_pAccountsCollector accounts_collector;
 
 };
 
