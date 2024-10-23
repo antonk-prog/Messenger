@@ -80,8 +80,7 @@ void api_login(t_pEndPointArgs argv)
 		argv->response->append("Authentication: ");
 		argv->response->append(hash);
 		argv->response->append("\r\n");
-	}
-
+	} 
 	if (!hash.empty()){
 		argv->response->append("\r\n");
 		argv->response->append("OK");

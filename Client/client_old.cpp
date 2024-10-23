@@ -34,6 +34,7 @@ int main() {
     //     std::cerr << "Request failed, error: " << e.what() << '\n';
     // }   
     
+
     WINDOW *people_menu,  *chat_window, *auth_window, *log_window, *reg_window;
     int auth_window_ind = 0;
     bool is_logged = false;
@@ -161,6 +162,8 @@ int main() {
                         mvwprintw(auth_window, FULL_HEIGHT/2, FULL_WIDTH/2-5, "%s", "Registrate");
                         keypad(auth_window, TRUE);
                         break;
+                    } else {
+                        exit(1);
                     }
                     if (true) // send hhtp post request and check if user exists. if true:
                     {
@@ -242,7 +245,8 @@ int main() {
 
                     catch (const std::exception& e)
                     {
-                        std::cerr << "Request failed, error: " << e.what() << '\n';
+                        // std::cerr << "Request failed, error: " << e.what() << '\n';
+                            continue;
                     }
                     if (std::string{response.body.begin(), response.body.end()} == "OK") // send hhtp post request and check if succeded to create user account :
                     {
