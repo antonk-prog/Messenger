@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+
 #include <Session.hpp>
 #include <AuthCollectorBase.hpp>
 #define SERVER_PORT 8484
@@ -22,6 +23,8 @@ struct ServerData
     t_pAuthCollectorBase authCollector;
     t_pJsonConverter converter;
     std::vector<EndPoint> endPoints;
+    t_pDb my_db;
+    
 };
 // Server -> Session -> Endpoint
 using t_pServerData = std::shared_ptr<ServerData>;

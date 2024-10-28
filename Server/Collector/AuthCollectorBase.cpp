@@ -1,13 +1,11 @@
 #include <AuthCollectorBase.hpp>
 
-AuthCollectorBase::AuthCollectorBase(t_pAccountsCollector accounts_collector) {
-	this->accounts_collector = accounts_collector;
+AuthCollectorBase::AuthCollectorBase() {
 }
 
 bool AuthCollectorBase::checkUserExists(char* username, char* pass)
 {
-	if (accounts_collector->isUserExists(std::string(username))) return true;
-	return false;
+	return true;
 }
 
 unsigned long AuthCollectorBase::getIdByUsername(char* username)

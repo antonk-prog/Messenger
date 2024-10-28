@@ -5,12 +5,14 @@
 #include <memory>
 #include <AuthSessionBase.hpp>
 #include <TempDataBase.hpp>
-using t_AuthSessionCollection = std::map<std::string, AuthSessionBase>;
+#include <pqxx/pqxx>
 
+using t_AuthSessionCollection = std::map<std::string, AuthSessionBase>;
+using t_pDb = std::shared_ptr<pqxx::connection>;
 class AuthCollectorBase
 {
 public:
-    AuthCollectorBase(t_pAccountsCollector accounts_collector);
+    AuthCollectorBase();
     ~AuthCollectorBase() = default;
 
     virtual std::string login(char* username, char* pass); // AuthSessionBase пытается создать объект, если получается добавляет его в активные сессии
@@ -24,6 +26,7 @@ private:
     unsigned long getIdByUsername(char*);
     bool checkUserExists(char* usr, char* pass);
     t_pAccountsCollector accounts_collector;
+    t_pDb my_database;
 
 };
 

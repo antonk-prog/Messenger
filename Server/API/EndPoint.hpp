@@ -12,7 +12,6 @@ using t_pResponse = std::shared_ptr<std::string>;
 
 struct ServerData;
 using t_pServerData = std::shared_ptr<ServerData>;
-
 struct EndPointArgs
 {
     t_pServerData serverData;

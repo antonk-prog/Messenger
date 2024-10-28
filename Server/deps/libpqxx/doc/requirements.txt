@@ -1,0 +1,4 @@
+# XXX: Pin versions.
+dia
+sphinx-rtd-theme
+myst-parser
