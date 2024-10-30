@@ -6,7 +6,7 @@ This project uses libraries which located in github, so it is needed to submodul
 ## How to build:
 
 
-1. mkdir build && cd build
+1. mkdir build && mkdir bin && cd build
 2. cmake ../
 3. sudo make install
 4. ../bin/Server
