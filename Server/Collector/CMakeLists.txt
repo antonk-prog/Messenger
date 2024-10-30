@@ -5,5 +5,4 @@ file(GLOB Collector
 )
 
 include_directories(${CUR_DIR})
-
 add_library( Collector ${Collector})

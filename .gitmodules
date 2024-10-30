@@ -1,0 +1,12 @@
+[submodule "deps/libpqxx"]
+	path = deps/libpqxx
+	url = https://github.com/jtv/libpqxx.git
+[submodule "deps/nlohmann"]
+	path = deps/nlohmann
+	url = https://github.com/nlohmann/json
+[submodule "deps/httprequest"]
+	path = deps/httprequest
+	url = https://github.com/elnormous/HTTPRequest.git
+[submodule "deps/httpparser"]
+	path = deps/httpparser
+	url = https://github.com/nekipelov/httpparser.git

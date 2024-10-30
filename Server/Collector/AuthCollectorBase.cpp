@@ -43,7 +43,6 @@ std::string AuthCollectorBase::login(char* username, char* pass)
 
 bool AuthCollectorBase::registrate(char* username, char* pass){
 	if (!checkUserExists(username, pass)){
-		accounts_collector->addAccount(username, pass);
 		return true;
 	} 
 	return false;

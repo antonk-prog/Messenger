@@ -17,7 +17,6 @@
 #define THREAD_HANDLE_COUNT 4
 
 class EndPoint;
-
 struct ServerData
 {
     t_pAuthCollectorBase authCollector;

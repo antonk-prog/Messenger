@@ -4,7 +4,6 @@
 #include <map>
 #include <memory>
 #include <AuthSessionBase.hpp>
-#include <TempDataBase.hpp>
 #include <pqxx/pqxx>
 
 using t_AuthSessionCollection = std::map<std::string, AuthSessionBase>;
@@ -25,7 +24,6 @@ private:
     t_AuthSessionCollection m_ses;
     unsigned long getIdByUsername(char*);
     bool checkUserExists(char* usr, char* pass);
-    t_pAccountsCollector accounts_collector;
     t_pDb my_database;
 
 };

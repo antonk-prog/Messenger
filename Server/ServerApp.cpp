@@ -9,8 +9,7 @@ void add_all_endpoints(Server & server);
 int main() {
     try{
         t_pServerData serverData = std::make_shared<ServerData>();
-        t_pAccountsCollector accounts_collector = std::make_shared<DataBaseAccounts>();
-        serverData->authCollector = std::make_shared<AuthCollectorBase>(accounts_collector);
+        serverData->authCollector = std::make_shared<AuthCollectorBase>();
         serverData->my_db = std::make_shared<pqxx::connection>(DB_CONNECTION_ARGUMENTS);
         Server server(serverData);
  
