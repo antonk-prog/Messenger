@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-#define DB_CONNECTION_ARGUMENTS "user = anton password = 105605 hostaddr = 127.0.0.1 port = 5432 dbname = test"
+#define DB_CONNECTION_ARGUMENTS "user = anton password = 105605 hostaddr = 127.0.0.1 port = 5432 dbname = messenger_db"
 
 void add_all_endpoints(Server & server);
 int main() {

@@ -1,4 +1,4 @@
-#if ! defined(AUTH_SESSION_BASE_HPP)
+#if !defined(AUTH_SESSION_BASE_HPP)
 #define AUTH_SESSION_BASE_HPP
 
 #include <string>

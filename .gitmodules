@@ -10,3 +10,6 @@
 [submodule "deps/httpparser"]
 	path = deps/httpparser
 	url = https://github.com/nekipelov/httpparser.git
+[submodule "deps/sqlbuilder"]
+	path = deps/sqlbuilder
+	url = https://github.com/six-ddc/sql-builder.git
