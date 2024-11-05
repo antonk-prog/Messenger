@@ -1,5 +1,4 @@
 #include <Server.hpp>
-
 Server::Server(t_pServerData data)
 {   
     const int opt = 1;

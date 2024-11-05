@@ -10,9 +10,12 @@ int main() {
     try{
         t_pServerData serverData = std::make_shared<ServerData>();
         serverData->authCollector = std::make_shared<AuthCollectorBase>();
-        serverData->my_db = std::make_shared<pqxx::connection>(DB_CONNECTION_ARGUMENTS);
+        serverData->postgres_adapter = std::make_shared<PostgresAdapter>(DB_CONNECTION_ARGUMENTS);
+
+        
         Server server(serverData);
  
+
         add_all_endpoints(server);
 
         server.start_acceptor();

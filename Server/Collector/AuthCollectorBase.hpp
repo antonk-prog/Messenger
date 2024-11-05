@@ -7,7 +7,6 @@
 #include <pqxx/pqxx>
 
 using t_AuthSessionCollection = std::map<std::string, AuthSessionBase>;
-using t_pDb = std::shared_ptr<pqxx::connection>;
 class AuthCollectorBase
 {
 public:
@@ -24,10 +23,9 @@ private:
     t_AuthSessionCollection m_ses;
     unsigned long getIdByUsername(char*);
     bool checkUserExists(char* usr, char* pass);
-    t_pDb my_database;
 
 };
-
 using t_pAuthCollectorBase = std::shared_ptr<AuthCollectorBase>;
+
 
 #endif

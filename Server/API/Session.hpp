@@ -1,5 +1,4 @@
-#if !defined(SESSION_HPP)
-#define SESSION_HPP
+#pragma once
 
 /*
 TODO
@@ -56,4 +55,3 @@ private:
 
 using t_pSession = std::shared_ptr<Session>;
 
-#endif

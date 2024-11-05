@@ -1,5 +1,4 @@
-#if !defined(SERVER_HPP)
-#define SERVER_HPP
+#pragma once
 
 #include <chrono>
 #include <queue>
@@ -13,24 +12,30 @@
 
 #include <Session.hpp>
 #include <AuthCollectorBase.hpp>
+#include <PostgresAdapter.hpp>
 #define SERVER_PORT 8484
 #define THREAD_HANDLE_COUNT 4
 
-class EndPoint;
-struct ServerData
-{
-    t_pAuthCollectorBase authCollector;
-    t_pJsonConverter converter;
-    std::vector<EndPoint> endPoints;
-    t_pDb my_db;
-    
-};
+class EndPoint; 
+struct ServerData;
+
 // Server -> Session -> Endpoint
 using t_pServerData = std::shared_ptr<ServerData>;
 struct EndPointArgs;
 using t_pEndPointArgs = std::shared_ptr<EndPointArgs>;
 class Session;
+using t_pPostgresAdapter = std::shared_ptr<PostgresAdapter>;
 using t_pSession = std::shared_ptr<Session>;
+
+
+struct ServerData
+{
+    t_pAuthCollectorBase authCollector;
+    t_pJsonConverter converter;
+    std::vector<EndPoint> endPoints;
+    t_pPostgresAdapter postgres_adapter;
+    
+};
 class Server
 {
 public:
@@ -56,4 +61,3 @@ private:
 
 };
 
-#endif
