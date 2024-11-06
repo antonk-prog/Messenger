@@ -43,6 +43,7 @@
 
 void api_login(t_pEndPointArgs argv)
 {
+	std::cout << "here" << std::endl;
 	/*
 	TODO
 	пределать авторизацию на OAuth2.0
@@ -70,16 +71,49 @@ void api_login(t_pEndPointArgs argv)
 	if (username.empty() || password.empty())
 		return ;
 	// TODO переделать на строки
+	try {
+		pqxx::work w(*(argv->serverData->postgres_adapter->getPostgresConnection()));
+		w.exec("INSERT INTO user_accounts VALUES ('ab', '1233');");
+		w.commit();
+
+		argv->response->append("Success:");
+		argv->response->append("yes");
+		argv->response->append("\r\n");
+
+		argv->response->append("Problem:");
+		argv->response->append("0");
+		argv->response->append("\r\n");
+
+		argv->response->append("\r\n");
+		argv->response->append("OK");
+	}
+	catch (const pqxx::unique_violation & e){
+		//TODO обрабатывать случай, когда пользователь пытается зарегестрировать пользователя с существующем именем
+		std::cerr << "This type of error"<< '\n';
+
+		argv->response->append("Success:");
+		argv->response->append("no");
+		argv->response->append("\r\n");
+
+		argv->response->append("Problem:");
+		argv->response->append("1");
+		argv->response->append("\r\n");
+
+		argv->response->append("\r\n");
+		argv->response->append("FAIL");
 	
+	}  
+	catch (const std::exception& e)
+	{
+		std::cerr << "Very bad error"<< '\n';
+	}
 	// hash = argv->serverData->authCollector->login(
 	// 	(char*)username.c_str(), (char*)password.c_str()
 	// );
 	
 	// if (!hash.empty())
 	// {
-	// 	argv->response->append("Authentication: ");
-	// 	argv->response->append(hash);
-	// 	argv->response->append("\r\n");
+		
 	// } 
 	// if (!hash.empty()){
 	// 	argv->response->append("\r\n");
