@@ -11,7 +11,6 @@
 #include <unistd.h>
 
 #include <Session.hpp>
-#include <AuthCollectorBase.hpp>
 #include <PostgresAdapter.hpp>
 #define SERVER_PORT 8484
 #define THREAD_HANDLE_COUNT 4
@@ -30,7 +29,6 @@ using t_pSession = std::shared_ptr<Session>;
 
 struct ServerData
 {
-    t_pAuthCollectorBase authCollector;
     t_pJsonConverter converter;
     std::vector<EndPoint> endPoints;
     t_pPostgresAdapter postgres_adapter;

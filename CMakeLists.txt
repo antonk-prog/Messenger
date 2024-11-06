@@ -21,7 +21,6 @@ target_include_directories(ServerAPI PUBLIC ${SQLBUILDER_HEADERS})
 target_include_directories(Server PUBLIC ${NLOHMANN_HEADERS})
 target_include_directories(Server PUBLIC ${LIBPQXX_HEADERS})
 add_subdirectory(${LIBPQXX_HEADERS})
-target_link_libraries(Collector PUBLIC pqxx)
 target_link_libraries(ServerAPI PUBLIC pqxx)
 
 target_link_libraries(Server PUBLIC OpenSSL::Crypto)

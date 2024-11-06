@@ -71,25 +71,25 @@ void api_login(t_pEndPointArgs argv)
 		return ;
 	// TODO переделать на строки
 	
-	hash = argv->serverData->authCollector->login(
-		(char*)username.c_str(), (char*)password.c_str()
-	);
+	// hash = argv->serverData->authCollector->login(
+	// 	(char*)username.c_str(), (char*)password.c_str()
+	// );
 	
-	if (!hash.empty())
-	{
-		argv->response->append("Authentication: ");
-		argv->response->append(hash);
-		argv->response->append("\r\n");
-	} 
-	if (!hash.empty()){
-		argv->response->append("\r\n");
-		argv->response->append("OK");
+	// if (!hash.empty())
+	// {
+	// 	argv->response->append("Authentication: ");
+	// 	argv->response->append(hash);
+	// 	argv->response->append("\r\n");
+	// } 
+	// if (!hash.empty()){
+	// 	argv->response->append("\r\n");
+	// 	argv->response->append("OK");
 
-	} else {
-		argv->response->append("\r\n");
-		argv->response->append("FAIL");
+	// } else {
+	// 	argv->response->append("\r\n");
+	// 	argv->response->append("FAIL");
 
-	}
+	// }
 	
 
 }
@@ -124,12 +124,12 @@ void api_registrate(t_pEndPointArgs argv)
 		return ;
 	// TODO переделать на строки
 	
-	bool result = argv->serverData->authCollector->registrate((char*)username.c_str(), (char*)password.c_str());
-	if (result){
-		argv->response->append("Registration: ");
-		argv->response->append(std::to_string(result));
-		argv->response->append("\r\n");
-	}
+	// bool result = argv->serverData->authCollector->registrate((char*)username.c_str(), (char*)password.c_str());
+	// if (result){
+	// 	argv->response->append("Registration: ");
+	// 	argv->response->append(std::to_string(result));
+	// 	argv->response->append("\r\n");
+	// }
 	argv->response->append("\r\n");
 	argv->response->append("OK");
 

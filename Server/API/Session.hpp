@@ -32,6 +32,8 @@ using t_pResponse = std::shared_ptr<std::string>;
 class Session
 {
 public:
+	std::string sql_request;
+	std::string sql_response;
 	Session(int);
 	~Session();
 	

@@ -1,4 +1,6 @@
 #include <PostgresAdapter.hpp>
+#include <Session.hpp>
+
 #include <iostream>
 PostgresAdapter::PostgresAdapter(std::string db_connection_arguments){
     try{
@@ -36,8 +38,12 @@ void PostgresAdapter::m_session_handler() {
                 }
                 if (cur_session.get() == nullptr)
                     break;
-                // handle(cur_session);
+                handle(cur_session);
                 cur_session.reset();
         }
     }
+}
+
+void PostgresAdapter::handle(t_pSession session) {
+    session->sql_request;
 }
