@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
+set(CMAKE_CPP_COMPILER ${C_COMPILER})
 project(Messenger)
 
 set(CMAKE_CXX_STANDARD 20)

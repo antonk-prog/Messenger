@@ -1,10 +1,11 @@
 ## Dependencies:
-This project uses libraries which located in github, so it is needed to submodule them. Also pqxx library uses libpq so it is necessary to download it first. Execute next steps:
-1. sudo apt install libpq-dev
-2. git submodule init
-3. git submodule update
-## How to build:
 
+1. sudo apt install libpq-dev
+2. sudo apt-get install libncurses-dev
+3. sudo sh instulling_submodules.sh
+4. wait and drink a coffee)
+
+## How to build:
 
 1. mkdir build && mkdir bin && cd build
 2. cmake ../
