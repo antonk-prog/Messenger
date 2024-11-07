@@ -1,7 +1,6 @@
 #include <ncurses.h>
 #include <vector>
 #include <string>
-#include <string>
 #include <iostream>
 #include "HTTPRequest.hpp"
 #define PEOPLE_HEIGHT 20

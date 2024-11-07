@@ -1,6 +1,7 @@
 #include <EndPoint.hpp>
 #include <Server.hpp>
 #include <URI.hpp>
+#include <sql.h>
 #define API_VERSION_V1 "/api/v1"
 
 // void EP_api_get_inventory(t_pEndPointArgs argv)
@@ -43,7 +44,6 @@
 
 void api_login(t_pEndPointArgs argv)
 {
-	std::cout << "here" << std::endl;
 	/*
 	TODO
 	пределать авторизацию на OAuth2.0
@@ -73,7 +73,10 @@ void api_login(t_pEndPointArgs argv)
 	// TODO переделать на строки
 	try {
 		pqxx::work w(*(argv->serverData->postgres_adapter->getPostgresConnection()));
-		w.exec("INSERT INTO user_accounts VALUES ('ab', '1233');");
+		sql::InsertModel insert_model;
+		insert_model.insert("username", username)("password", password).into("user_accounts"); 
+		std::cout << "sql request: " << insert_model.str() << std::endl;
+		w.exec(insert_model.str());
 		w.commit();
 
 		argv->response->append("Success:");
