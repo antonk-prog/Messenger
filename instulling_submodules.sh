@@ -16,7 +16,7 @@ git clone https://github.com/jtv/libpqxx.git .
 cd ..
 mkdir nlohmann
 cd nlohmann
-git clone https://github.com/nlohmann/json .
+git clone https://github.com/nlohmann/json.git .
 cd ..
 mkdir sqlbuilder
 cd sqlbuilder
