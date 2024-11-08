@@ -2,7 +2,7 @@
 #define JSON_HPP_
 
 
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <algorithm>
 #include <map>
 #include <memory>

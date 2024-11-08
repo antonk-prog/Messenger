@@ -2,8 +2,9 @@
 #include <Server.hpp>
 #include <URI.hpp>
 #include <sql.h>
+#include <mutex>
 #define API_VERSION_V1 "/api/v1"
-
+std::mutex postgres_mutex;
 // void EP_api_get_inventory(t_pEndPointArgs argv)
 // {
 // 	/*
@@ -72,6 +73,7 @@ void api_login(t_pEndPointArgs argv)
 		return ;
 	// TODO переделать на строки
 	try {
+		std::lock_guard _lock(postgres_mutex);	
 		pqxx::work w(*(argv->serverData->postgres_adapter->getPostgresConnection()));
 		sql::InsertModel insert_model;
 		insert_model.insert("username", username)("password", password).into("user_accounts"); 

@@ -5,7 +5,6 @@
 #include <memory>
 #include <queue>
 #include <chrono>
-#include <mutex>
 #include <thread>
 #include <mutex>
 
@@ -35,7 +34,6 @@ t_pDataBaseConnection getPostgresConnection();
 
 private:
     t_pDataBaseConnection database_connection;
-    std::mutex m_mutex;
 };
 
 using t_pPostgresAdapter = std::shared_ptr<PostgresAdapter>;
